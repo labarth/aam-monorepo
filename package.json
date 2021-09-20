@@ -1,0 +1,21 @@
+{
+  "name": "am-monorepo",
+  "version": "1.0.0",
+  "description": "monorepo",
+  "main": "index.js",
+  "scripts": {
+    "start:client": "cd client && yarn start",
+    "start:server": "cd server && yarn start:dev",
+    "build:client": "cd client && yarn build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/labarth/aam-monorepo.git"
+  },
+  "author": "AM",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/labarth/aam-monorepo/issues"
+  },
+  "homepage": "https://github.com/labarth/aam-monorepo#readme"
+}
