@@ -19,7 +19,6 @@ export class AuthService {
   ) {}
 
   async login(dto: LoginDto) {
-    console.log('logiiin');
     const user = await this.userService.findUserByEmail(dto.email);
     const compare = await bcrypt.compare(dto.password, user.password);
 
