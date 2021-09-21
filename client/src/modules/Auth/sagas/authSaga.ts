@@ -5,6 +5,7 @@ import { SignInPayload, SignUpPayload } from 'modules/Auth/interfaces';
 import { isAuthService, signInService, signUpService } from 'modules/Auth/services';
 import { push } from 'connected-react-router';
 import { currentLocationSelector } from 'common/selectors/selectors';
+import { clearToken, getToken, saveToken } from '../utils';
 
 interface SignInSaga {
   payload: SignInPayload;
@@ -12,8 +13,8 @@ interface SignInSaga {
 
 function *signInSaga({ payload }: SignInSaga) {
   try {
-    const { data: user } = yield call(signInService, payload);
-    localStorage.setItem('token', user.token);
+    const { data: { user, token } } = yield call(signInService, payload);
+    saveToken(payload.isRememberMe, token);
     yield put(setUser(user));
     yield put(push('/'));
   } catch(e: any) {
@@ -22,7 +23,7 @@ function *signInSaga({ payload }: SignInSaga) {
 }
 
 export function *signOutSaga() {
-  localStorage.removeItem('token');
+  clearToken();
   yield put(push('/signin'));
 }
 
@@ -37,11 +38,11 @@ export function *redirectToSignIn() {
 
 export function *authorizeSaga() {
   try {
-    const token: string | null  = localStorage.getItem('token');
+    const localToken: string | null  = getToken();
 
-    if (token) {
-      const { data: user } = yield call(isAuthService, token);
-      localStorage.setItem('token', user.token);
+    if (localToken) {
+      const { data: { user, token, isRememberMe } } = yield call(isAuthService, localToken);
+      saveToken(isRememberMe, token);
       yield put(setUser(user));
       yield put(push('/'));
     } else {

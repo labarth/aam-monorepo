@@ -1,6 +1,7 @@
 export interface SignInPayload {
   email: string;
   password: string;
+  isRememberMe: boolean;
 }
 
 export interface SignUpPayload {

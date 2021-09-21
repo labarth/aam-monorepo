@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -25,6 +26,7 @@ export const SignIn = (): JSX.Element => {
     dispatch(signInAction({
       email: data.get('email') as string,
       password: data.get('password') as string,
+      isRememberMe: Boolean(data.get('remember')),
     }));
   };
 
@@ -83,7 +85,7 @@ export const SignIn = (): JSX.Element => {
               autoComplete="current-password"
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={<Checkbox name="remember" value="remember" color="primary" />}
               label="Remember me"
             />
             <Button
@@ -101,9 +103,11 @@ export const SignIn = (): JSX.Element => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
+                <NavLink to="/signup">
+                  <Link component="span" variant="body2">
+                    {"Don't have an account? Sign Up"}
+                  </Link>
+                </NavLink>
               </Grid>
             </Grid>
           </Box>

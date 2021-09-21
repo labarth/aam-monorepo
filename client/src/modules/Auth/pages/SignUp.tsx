@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -104,9 +105,11 @@ export const SignUp = (): JSX.Element => {
           </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
-              <Link href="#" variant="body2">
-                Already have an account? Sign in
-              </Link>
+              <NavLink to="/signin">
+                <Link component="span" variant="body2">
+                  Already have an account? Sign in
+                </Link>
+              </NavLink>
             </Grid>
           </Grid>
         </Box>

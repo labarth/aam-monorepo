@@ -32,19 +32,20 @@ export class AuthService {
         firstName: user.firstName || '',
         lastName: user.lastName || '',
         email: user.email,
+        isRememberMe: dto.isRememberMe,
       };
 
       const token = this.jwtService.sign(userData);
 
       return {
-        ...userData,
+        user: userData,
         token,
       };
     }
   }
 
   async isAuth(dto: AuthDto) {
-    const { email } = await this.jwtService.verify(dto.token);
+    const { email, isRememberMe } = await this.jwtService.verify(dto.token);
 
     if (!email) {
       throw new UnauthorizedException('this user is not authorize');
@@ -61,8 +62,9 @@ export class AuthService {
       };
 
       return {
-        ...userData,
+        user: userData,
         token: dto.token,
+        isRememberMe,
       };
     }
   }
